@@ -151,6 +151,28 @@ const deleteTask = (id) => {
 };
 
 /**
+ * Assigns a task to a user.
+ *
+ * Returns the updated task, or null when not found.
+ *
+ * @param {string} id
+ * @param {string} assignee
+ * @returns {object|null}
+ */
+const assignTask = (id, assignee) => {
+  const task = tasks.get(id);
+  if (!task) return null;
+
+  const updated = {
+    ...task,
+    assignee: assignee.trim(),
+  };
+
+  tasks.set(id, updated);
+  return updated;
+};
+
+/**
  * Marks a task as complete by setting status → "done" and stamping completedAt.
  *
  * Returns the updated task, or null when not found.
@@ -274,6 +296,7 @@ module.exports = {
   createTask,
   updateTask,
   deleteTask,
+  assignTask,
   completeTask,
   getFilteredTasks,
   getTaskStats,

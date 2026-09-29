@@ -150,6 +150,20 @@ const validateUpdateTask = (body) => {
   return { valid: true };
 };
 
+/**
+ * Validates the body of a PATCH /tasks/:id/assign request.
+ *
+ * @param {object} body
+ * @returns {{ valid: boolean, error?: string }}
+ */
+const validateAssignTask = (body) => {
+  if (!body || !isNonEmptyString(body.assignee)) {
+    return { valid: false, error: 'Assignee is required and must be a non-empty string' };
+  }
+
+  return { valid: true };
+};
+
 module.exports = {
   VALID_STATUSES,
   VALID_PRIORITIES,
@@ -159,4 +173,5 @@ module.exports = {
   isValidDate,
   validateCreateTask,
   validateUpdateTask,
+  validateAssignTask,
 };

@@ -23,10 +23,11 @@ const {
   createTask,
   updateTask,
   deleteTask,
+  assignTask,
   completeTask,
   getTaskStats,
 } = require('../services/taskService');
-const { validateCreateTask, validateUpdateTask } = require('../utils/validators');
+const { validateCreateTask, validateUpdateTask, validateAssignTask } = require('../utils/validators');
 
 const router = express.Router();
 
@@ -129,6 +130,28 @@ router.delete('/:id', (req, res) => {
   }
 
   res.status(204).send();
+});
+
+// ── PATCH /tasks/:id/assign ───────────────────────────────────────────────────
+
+/**
+ * Assigns a task to a user.
+ * Responds with 400 on validation failure, 404 when not found, 200 otherwise.
+ */
+router.patch('/:id/assign', (req, res) => {
+  const validation = validateAssignTask(req.body);
+
+  if (!validation.valid) {
+    return res.status(400).json({ error: validation.error });
+  }
+
+  const task = assignTask(req.params.id, req.body.assignee);
+
+  if (!task) {
+    return res.status(404).json({ error: 'Task not found' });
+  }
+
+  res.json(task);
 });
 
 // ── PATCH /tasks/:id/complete ─────────────────────────────────────────────────
