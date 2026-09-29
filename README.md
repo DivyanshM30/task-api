@@ -1,6 +1,6 @@
-# Take-Home Assignment — The Untested API
+# Take-Home Assignment - The Untested API
 
-**Candidate:** Divyansh Mishra  
+**By:** Divyansh Mishra  
 **Stack:** Node.js · Express · Jest · Supertest
 
 ---
